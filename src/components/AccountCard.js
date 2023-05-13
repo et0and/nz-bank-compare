@@ -1,44 +1,34 @@
 import PropTypes from "prop-types";
+import Link from "next/link";
 
 const AccountCard = ({ account }) => (
-    <div key={account.id} className="bg-white rounded-lg p-6 shadow-md overflow-hidden">
-        {Object.entries(account).map(([key, value]) => (
-        <p
-            key={key}
-            className={`text-gray-500 mb-2 break-words ${
-            key === "total_interest" ? "text-2xl font-bold" : "text-lg"
-            }`}
-        >
-            <span className="capitalize">{key.replace(/_/g, " ")}: </span>
-            <span className="text-black">{value}</span>
-        </p>
-        ))}
-    </div>
+  <div className="bg-white rounded-lg p-6 shadow-md overflow-hidden hover:bg-gray-300 transition-colors duration-200">
+    <h1 className="text-2xl text-black font-bold mb-2">{account.total_interest}% p.a.</h1>
+    <h2 className="text-xl text-black mb-2">{account.account_name}</h2>
+    <h3 className="text-lg text-black mb-2">{account.institution_name}</h3>
+    <div className="grid grid-cols-2 gap-2 text-sm text-black mb-4">
+        <p><strong>Min Balance:</strong> {account.minimum_balance_requirement}</p>
+        <p><strong>Max Balance:</strong> {account.maximum_balance_requirement}</p>
+        <p><strong>Fees:</strong> {account.account_fees}</p>
+        <p><strong>Rating:</strong> {account.credit_rating}</p>
+      </div>
+    <Link href={`/accounts/${account.id}`}>
+      <p className="text-blue-500 cursor-pointer no-underline hover:underline">View More</p>
+    </Link>
+  </div>
 );
 
 AccountCard.propTypes = {
-    account: PropTypes.shape({
-      institution_name: PropTypes.string.isRequired,
-      institution_type: PropTypes.string.isRequired,
-      account_name: PropTypes.string.isRequired,
-      description: PropTypes.string.isRequired,
-      account_category: PropTypes.string.isRequired,
-      url: PropTypes.string.isRequired,
-      credit_rating: PropTypes.string.isRequired,
-      total_interest: PropTypes.string.isRequired,
-      interest_calculation_frequency: PropTypes.string,
-      interest_payment_frequency: PropTypes.string.isRequired,
-      interest_conditions: PropTypes.string,
-      withdrawal_restrictions: PropTypes.string,
-      minimum_balance_requirement: PropTypes.string,
-      maximum_balance_requirement: PropTypes.string,
-      account_fees: PropTypes.string.isRequired,
-      service_fees_url: PropTypes.string.isRequired,
-      overdraft_available: PropTypes.string,
-      eligibility_criteria: PropTypes.string,
-      online_banking: PropTypes.string.isRequired,
-      branch_access: PropTypes.string.isRequired,
-    }).isRequired,
-  };
+  account: PropTypes.shape({
+    institution_name: PropTypes.string.isRequired,
+    account_name: PropTypes.string.isRequired,
+    total_interest: PropTypes.string.isRequired,
+    minimum_balance_requirement: PropTypes.string.isRequired,
+    maximum_balance_requirement: PropTypes.string.isRequired,
+    account_fees: PropTypes.string.isRequired,
+    credit_rating: PropTypes.string.isRequired,
+    id: PropTypes.string.isRequired,
+  }).isRequired,
+};
 
 export default AccountCard;

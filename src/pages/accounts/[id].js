@@ -1,8 +1,8 @@
 import { GoogleSpreadsheet } from "google-spreadsheet";
-import AccountCard from "@/components/AccountCard";
+import FullAccountCard from "@/components/FullAccountCard";
 
 export default function AccountPage({ account }) {
-  return account ? <AccountCard account={account} /> : <p>Loading...</p>;
+  return account ? <FullAccountCard account={account} /> : <p>Loading...</p>;
 }
 
 export async function getStaticPaths() {
