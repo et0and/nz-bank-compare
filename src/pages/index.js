@@ -1,6 +1,7 @@
 import Image from "next/image"
 import { Inter } from "next/font/google"
 import { useEffect, useState } from "react";
+import Link from "next/link";
 
 import AccountCard from "@/components/AccountCard";
 
@@ -29,7 +30,14 @@ export default function Home() {
         <div className="max-w-7xl mx-auto"> {/* This class constrains the width to 62rem */}
           {/* Updated grid-cols classes to be responsive */}
           <div className="grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-            {data.map((account, index) => (<AccountCard key={index} account={account} />))}
+          {data.map((account, index) => {
+          const accountSlug = `${account.institution_name}-${account.account_name}`.toLowerCase().replace(/ /g, "-");
+          return (
+          <Link href={`/accounts/${accountSlug}`} key={index}>
+            <AccountCard account={account} />
+          </Link>
+           );
+          })}
           </div>
         </div>
       ) : (
