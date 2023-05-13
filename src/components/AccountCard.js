@@ -12,7 +12,7 @@ const AccountCard = ({ account }) => (
         <p><strong>Fees:</strong> {account.account_fees}</p>
         <p><strong>Rating:</strong> {account.credit_rating}</p>
       </div>
-    <Link href={`/accounts/${account.id}`}>
+    <Link href={`/accounts/${account.slug}`}>
       <p className="text-blue-500 cursor-pointer no-underline hover:underline">View More</p>
     </Link>
   </div>
@@ -27,7 +27,7 @@ AccountCard.propTypes = {
     maximum_balance_requirement: PropTypes.string.isRequired,
     account_fees: PropTypes.string.isRequired,
     credit_rating: PropTypes.string.isRequired,
-    id: PropTypes.string.isRequired,
+    slug: PropTypes.string.isRequired,
   }).isRequired,
 };
 

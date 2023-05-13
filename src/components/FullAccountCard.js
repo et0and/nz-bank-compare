@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 
 const AccountCard = ({ account }) => (
-    <div key={account.id} className="bg-white min-h-screen p-24 overflow-hidden">
+    <div className="bg-white min-h-screen p-24 overflow-hidden">
         {Object.entries(account).map(([key, value]) => (
         <p
             key={key}

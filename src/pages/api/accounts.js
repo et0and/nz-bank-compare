@@ -19,23 +19,28 @@ export default async function handle(_, res) {
 
     // Load the header row values
     await sheet.loadHeaderRow();
-    const headerRow = sheet.headerValues;
+    const headerValues = sheet.headerValues;
 
     // Get all the rows of data
     const rows = await sheet.getRows();
 
-    // Map each row to a JSON object using the header values as keys
-    const jsonData = rows.map((row) => {
-      const data = {};
+  // Map each row to a JSON object using the header values as keys and create a slug for each account
+  const jsonData = rows.map((row) => {
+    let data = {};
 
-      headerRow.forEach((header) => {
-        // Transform the header key to lowercase and replace spaces with underscores
-        const transformedKey = header.toLowerCase().replace(/ /g, "_");
-        data[transformedKey] = row[header];
-      });
-
-      return data;
+    headerValues.forEach((header) => {
+      // Transform the header key to lowercase and replace spaces with underscores
+      const transformedKey = header.toLowerCase().replace(/ /g, "_");
+      data[transformedKey] = row[header];
     });
+
+    // Create a slug for each account and add it as an id
+    const slug = `${data.institution_name} ${data.account_name}`
+      .toLowerCase()
+      .replace(/ /g, "-");
+
+    return { ...data, slug };
+  });
 
     // Send the JSON data as the response
     res.status(200).json(jsonData);
