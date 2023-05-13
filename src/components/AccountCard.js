@@ -6,16 +6,16 @@ const AccountCard = ({ account }) => (
         <p
             key={key}
             className={`text-gray-500 mb-2 break-words ${
-            key === "total_interest" ? "text-2xl font-bold" : ""
+            key === "total_interest" ? "text-2xl font-bold" : "text-lg"
             }`}
         >
-            {key}: {value}
+            <span className="capitalize">{key.replace(/_/g, " ")}: </span>
+            <span className="text-black">{value}</span>
         </p>
         ))}
     </div>
 );
 
-// PropTypes for SavingsAccountCard component
 AccountCard.propTypes = {
     account: PropTypes.shape({
       institution_name: PropTypes.string.isRequired,
