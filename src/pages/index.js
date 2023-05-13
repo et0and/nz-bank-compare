@@ -62,7 +62,9 @@ export default function Home({ accounts }) {
       <main className="flex-1 flex flex-col items-center justify-between mt-20">
         <div className="max-w-7xl mx-auto grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         {accounts ? (
-          accounts.map((account, index) => (
+          accounts.filter((account) =>
+            account.account_name.toLowerCase().includes(searchTerm.toLowerCase())
+          ).map((account, index) => (
             <AccountCard account={account} key={index} />
           ))
         ) : (  // If data does not exist
