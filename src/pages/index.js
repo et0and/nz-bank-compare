@@ -4,7 +4,8 @@ import Link from "next/link";
 
 import SearchIcon from "@/components/SearchIcon";
 import AccountCard from "@/components/AccountCard";
-import { fetchAccounts } from "@/helpers";
+
+import { fetchAccountsData } from "@/helpers";
 
 const inter = Inter({ subsets: ["latin"] })
 
@@ -77,21 +78,21 @@ export default function Home({ accounts }) {
 };
 
 // Define getStaticProps function to fetch data at build time
-export async function getStaticProps() {
-  let accounts = []
+export async function getServerSideProps() {
+  let accountsData = []
   try {
     // Fetch account data from the API endpoint
-    accounts = await fetchAccounts();
+    accountsData = await fetchAccountsData();
   } catch (error) {
     console.log("Error:", error);
     // If an error occurs, initialize data with an empty array
-    accounts = [];
+    accountsData = [];
   }
 
   // Return the data as props to the Home component
   return {
     props: {
-      accounts,
+      accounts: accountsData,
     },
   };
 };
