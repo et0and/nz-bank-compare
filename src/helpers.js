@@ -35,7 +35,7 @@ const createDataFromRows = (rows, headerValues) => {
   });
 };
 
-const avoidRateLimit = async (delay = 500) => {
+const avoidRateLimit = async (delay = 5000) => {
   if (!process.env.IS_BUILD) {
     return
   }
