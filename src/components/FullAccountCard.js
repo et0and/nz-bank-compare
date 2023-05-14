@@ -38,7 +38,7 @@ AccountCard.propTypes = {
       eligibility_criteria: PropTypes.string,
       online_banking: PropTypes.string.isRequired,
       branch_access: PropTypes.string.isRequired,
-    }).isRequired,
+    }),
   };
 
 export default AccountCard;
