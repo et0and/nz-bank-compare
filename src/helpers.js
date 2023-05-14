@@ -17,7 +17,7 @@ const getRowsAndHeader = async (sheet) => {
   await sheet.loadHeaderRow();
   const headerValues = sheet.headerValues;
   const rows = await sheet.getRows();
-  return { headerValues, rows };
+  return [ headerValues, rows ];
 };
 
 // Define a helper function to create JSON objects from rows and header values
@@ -35,26 +35,43 @@ const createDataFromRows = (rows, headerValues) => {
   });
 };
 
+const avoidRateLimit = async (delay = 500) => {
+  if (!process.env.IS_BUILD) {
+    return
+  }
+
+  return new Promise((resolve) => {
+    setTimeout(resolve, delay)
+  })
+};
+
 export const fetchAccountsData = async () => {
+  let accountsData = [];
   try {
+    await avoidRateLimit();
     const sheet = await authenticateGoogleSheet();
-    const { headerValues, rows } = await getRowsAndHeader(sheet);
-    const accountsData = createDataFromRows(rows, headerValues);
+    const [headerValues, rows] = await getRowsAndHeader(sheet);
+    accountsData = createDataFromRows(rows, headerValues);
     return accountsData;
   } catch (error) {
     console.log("Error:", error);
-    return [];
+    return accountsData;
   }
 };
 
 export const fetchAccountData = async (slug) => {
+  let accountData = {};
   try {
+    await avoidRateLimit();
     const sheet = await authenticateGoogleSheet();
-    const { headerValues, rows } = await getRowsAndHeader(sheet);
-    const accountsData = createDataFromRows(rows, headerValues);
-    return accountsData.find((account) => account.slug === slug);
+    const [headerValues, rows] = await getRowsAndHeader(sheet);
+    const data = createDataFromRows(rows, headerValues);
+    accountData = data.find((account) => {
+      return account.slug === slug;
+    });
+    return accountData;
   } catch (error) {
     console.log("Error:", error);
-    return [];
+    return accountData;
   }
 };

@@ -28,7 +28,7 @@ AccountCard.propTypes = {
     account_fees: PropTypes.string.isRequired,
     credit_rating: PropTypes.string.isRequired,
     slug: PropTypes.string.isRequired,
-  }).isRequired,
+  }),
 };
 
 export default AccountCard;
