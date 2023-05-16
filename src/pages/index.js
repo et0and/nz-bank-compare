@@ -1,8 +1,8 @@
 import { Inter } from "next/font/google"
 import { useState } from "react";
-import Link from "next/link";
-
-import SearchIcon from "@/components/SearchIcon";
+import Meta from "@/components/Meta";
+import Nav from "@/components/Nav";
+import SearchBar from "@/components/SearchBar";
 import AccountCard from "@/components/AccountCard";
 
 import { fetchAccountsData } from "@/helpers";
@@ -12,52 +12,27 @@ const inter = Inter({ subsets: ["latin"] })
 export default function Home({ accounts }) {
   const [searchTerm, setSearchTerm] = useState("");
   const [menuOpen, setMenuOpen] = useState(false);
-  const [searchOpen, setSearchOpen] = useState(false);
 
-  const links = (
-    <>
-    <Link href="/browse" className="no-underline hover:underline">Browse</Link>
-    <Link href="/blog" className="no-underline hover:underline">Blog</Link>
-    <Link href="/about" className="no-underline hover:underline">About</Link>
-    <Link href="/contact" className="no-underline hover:underline">Contact</Link>
-    </>
-  );
+  const handleSearch = (searchTerm) => {
+    setSearchTerm(searchTerm);
+  };
 
   return (
-    <div className={`flex flex-col min-h-screen p-24 ${inter.className}`}>
+    <div className={`flex flex-col min-h-screen px-4 md:px-24 py-8 md:py-24 ${inter.className}`}>
+      <Meta />
       <nav className="flex justify-between items-center mb-12">
         <h1 className="text-2xl font-bold text-white hidden md:block">Rates Radar</h1>
         <div className="space-x-4 hidden md:flex">
-            {links}
+          <Nav />
         </div>
         <button className="md:hidden text-2xl no-underline hover:underline" onClick={() => setMenuOpen(!menuOpen)}>
           Menu
         </button>
-        {searchOpen ? (
-          <input
-            type="text"
-            placeholder="Search"
-            className="w-1/6 px-3 py-1 border rounded text-black md:w-64"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            onBlur={() => setSearchOpen(false)}
-          />
-        ) : (
-          <button className="md:hidden" onClick={() => setSearchOpen(true)}>
-            <SearchIcon />
-          </button>
-        )}
-        <input
-          type="text"
-          placeholder="Search"
-          className="w-1/6 px-3 py-1 border rounded text-black md:block hidden"
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-        />
+        <SearchBar onSearch={handleSearch} />
       </nav>
       {menuOpen && (
         <div className="flex flex-col space-y-2 mb-12 md:hidden">
-          {links}
+          <Nav />
         </div>
       )}
       <main className="flex-1 flex flex-col items-center justify-between mt-20">
