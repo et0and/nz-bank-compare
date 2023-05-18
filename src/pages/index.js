@@ -53,7 +53,7 @@ export default function Home({ accounts }) {
 };
 
 // Define getStaticProps function to fetch data at build time
-export async function getServerSideProps() {
+export async function getStaticProps() {
   let accountsData = []
   try {
     // Fetch account data from the API endpoint
