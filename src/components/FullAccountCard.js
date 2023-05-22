@@ -3,6 +3,7 @@ import Nav from "@/components/Nav";
 import { useState } from "react";
 import { Inter } from "next/font/google";
 import Link from "next/link";
+import Meta from "@/components/Meta";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -10,22 +11,23 @@ const AccountCard = ({ account }) => {
   const [menuOpen, setMenuOpen] = useState(false);
 
   return (
-    <div className={`flex flex-col min-h-screen px-4 md:px-24 py-4 md:py-24 ${inter.className}`}>
+    <div className={`flex flex-col min-h-screen px-4 md:px-24 py-8 md:py-24 ${inter.className}`}>
+      <Meta />
       <nav className="flex justify-between items-center mb-12">
+        <button className="md:hidden text-2xl no-underline hover:underline" onClick={() => setMenuOpen(!menuOpen)}>
+          Menu
+        </button>
         <Link href="/">
         <h1 className="text-2xl font-bold text-black dark:text-white hidden md:block no-underline hover:underline">Rates Radar</h1>
         </Link>
         <div className="space-x-4 hidden md:flex">
-            <Nav />
+          <Nav />
         </div>
-        <button className="md:hidden text-2xl no-underline hover:underline" onClick={() => setMenuOpen(!menuOpen)}>
-          Menu
-        </button>
       </nav>
       {menuOpen && (
         <div className="flex flex-col space-y-2 mb-12 md:hidden">
-          <Nav />
-        </div>
+        <Nav />
+      </div>
       )}
       <h1 className="text-center text-4xl my-4">{account.account_name}</h1>
       <h3 className="text-center text-2xl mb-8">{account.institution_name}</h3>
