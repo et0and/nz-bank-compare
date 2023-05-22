@@ -16,7 +16,7 @@ export default function SearchBar({ onSearch }) {
         <input
           type="text"
           placeholder="Search"
-          className="w-1/6 px-3 py-1 border rounded text-white bg-black md:w-64"
+          className="w-1/6 px-3 py-1 border rounded text-black bg-white dark:text-white dark:bg-black md:w-64"
           value={searchTerm}
           onChange={handleSearch}
           onBlur={() => setSearchOpen(false)}
@@ -29,7 +29,7 @@ export default function SearchBar({ onSearch }) {
       <input
         type="text"
         placeholder="Search"
-        className="w-1/6 px-3 py-1 border rounded text-white bg-black md:w-64 md:block hidden"
+        className="w-1/6 px-3 py-1 border rounded text-black bg-white dark:text-white dark:bg-black md:w-64 md:block hidden"
         value={searchTerm}
         onChange={handleSearch}
       />

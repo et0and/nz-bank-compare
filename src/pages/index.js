@@ -4,6 +4,7 @@ import Meta from "@/components/Meta";
 import Nav from "@/components/Nav";
 import SearchBar from "@/components/SearchBar";
 import AccountCard from "@/components/AccountCard";
+import Link from "next/link";
 
 import { fetchAccountsData } from "@/helpers";
 
@@ -21,25 +22,28 @@ export default function Home({ accounts }) {
     <div className={`flex flex-col min-h-screen px-4 md:px-24 py-8 md:py-24 ${inter.className}`}>
       <Meta />
       <nav className="flex justify-between items-center mb-12">
-        <h1 className="text-2xl font-bold text-white hidden md:block">Rates Radar</h1>
-        <div className="space-x-4 hidden md:flex">
-          <Nav />
-        </div>
         <button className="md:hidden text-2xl no-underline hover:underline" onClick={() => setMenuOpen(!menuOpen)}>
           Menu
         </button>
+        <Link href="/">
+        <h1 className="text-2xl font-bold text-black dark:text-white hidden md:block no-underline hover:underline">Rates Radar</h1>
+        </Link>
+        <div className="space-x-4 hidden md:flex">
+          <Nav />
+        </div>
         <SearchBar onSearch={handleSearch} />
       </nav>
       {menuOpen && (
         <div className="flex flex-col space-y-2 mb-12 md:hidden">
-          <Nav />
-        </div>
+        <Nav />
+      </div>
       )}
       <main className="flex-1 flex flex-col items-center justify-between mt-20">
         <div className="max-w-7xl mx-auto grid sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         {accounts ? (
           accounts.filter((account) =>
-            account.account_name.toLowerCase().includes(searchTerm.toLowerCase())
+            account.account_name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            account.institution_name.toLowerCase().includes(searchTerm.toLowerCase())
           ).map((account, index) => (
             <AccountCard account={account} key={index} />
           ))
